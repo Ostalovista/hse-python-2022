@@ -1,6 +1,6 @@
+import csv
 from pathlib import Path
 from typing import Dict, Any, List, Optional
-
 
 def count_words(text: str) -> Dict[str, int]:
     """
@@ -26,10 +26,25 @@ def count_words(text: str) -> Dict[str, int]:
              значение - количество вхождений слов в текст
     """
 
-    # пиши свой код здесь
+    text = text.lower()
+    marks = ',/.-!&?;:'
+    for i in marks:
+        text = text.replace(i, ' ')
+    text = text.replace('  ', ' ')
 
-    return {}
+    dictionary = text.split()
 
+    answer = {}
+
+
+    for word in dictionary:
+        if word.isalpha():
+            if word in answer:
+                answer[word] += 1
+            else:
+                answer[word] = 1
+
+    return answer
 
 def exp_list(numbers: List[int], exp: int) -> List[int]:
     """
@@ -41,9 +56,8 @@ def exp_list(numbers: List[int], exp: int) -> List[int]:
     """
 
     # пиши свой код здесь
-
-    return []
-
+    answer = [i**exp for i in numbers]
+    return answer
 
 def get_cashback(operations: List[Dict[str, Any]], special_category: List[str]) -> float:
     """
@@ -66,7 +80,6 @@ def get_cashback(operations: List[Dict[str, Any]], special_category: List[str]) 
             res += x['amount'] * 0.01
     return res
 
-
 def get_path_to_file() -> Optional[Path]:
     """
     Находит корректный путь до тестового файла.
@@ -81,7 +94,6 @@ def get_path_to_file() -> Optional[Path]:
     else:
         base_path = Path().resolve()
     return base_path / 'tasks' / 'practice3' / 'tasks.csv'
-
 
 def csv_reader(header: str) -> int:
     """
@@ -107,4 +119,11 @@ def csv_reader(header: str) -> int:
 
     # пиши свой код здесь
 
-    return 0
+    ans = 0
+    uniq_el = set()
+    with open(get_path_to_file()) as f:
+        reader = csv.DictReader(f)
+        for column in reader:
+            uniq_el.add(column[header])
+    count = len(uniq_el)
+    return count

@@ -1,6 +1,5 @@
 from typing import Any, Optional
 
-
 def search_phone(content: Any, name: str) -> Optional[str]:
     """
     Функция поиска номера телефона пользователя в структуре данных.
@@ -31,13 +30,23 @@ def search_phone(content: Any, name: str) -> Optional[str]:
     2) Чтобы проверить, является ли объект словарем используйте функцию:
     isinstance(some_object, dict)
 
-
     :param content: словарь или список, внутрь которого вложены объекты. Внутри
                       может скрываться номер телефона пользователя
     :param name: имя пользователя, у которого будем искать номер телефона
     :return: номер телефона пользователя или None
     """
 
-    # пиши свой код здесь
+    user_phone = None
 
-    return None
+    if isinstance(content, list):
+        for i in range(0, len(content)):
+            user_phone = search_phone(content[i], name)
+
+    if isinstance(content, dict):
+        if ('name' in content) and (content['name'] == name):
+            user_phone = content['phone']
+        else:
+            for i in content:
+                user_phone = search_phone(content[i], name)
+
+    return user_phone

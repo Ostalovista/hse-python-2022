@@ -82,7 +82,12 @@ class Developer(Employee):
         Задача: реализовать конструктор класса, используя конструктор родителя
         """
 
-        # пиши свой код здесь
+        if isinstance(name, str) and isinstance(position, str) and isinstance(salary, int):
+            self.name = name
+            self.position = position
+            self._salary = salary
+        else:
+            raise ValueError
 
 
 class Manager(Employee):
